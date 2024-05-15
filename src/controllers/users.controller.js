@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Validation } from "../util/validations.js";
 import { AppError } from "../errors/app-error.js";
 import { knexApp } from '../database/knex/config.js';
+import { getCurrentDateString } from '../util/date-util.js';
 
 export class UsersController {
 
@@ -114,7 +115,7 @@ export class UsersController {
           name: user.name.trim(),
           email: user.email.trim().toLowerCase(),
           password: user.password,
-          updated_at: new Date().toISOString().replace('T', ' ').split('.')[0]
+          updated_at: getCurrentDateString()
         });
 
     return response.json();
