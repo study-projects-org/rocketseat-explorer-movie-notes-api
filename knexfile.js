@@ -15,7 +15,7 @@ export const development = {
     filename: resolve(__dirname, 'src', 'database', 'database.db')
   },
   migrations: {
-    directory: resolve(__dirname, 'src', 'database', 'migrations')
+    directory: resolve(__dirname, 'src', 'database','knex', 'migrations')
   }, 
   useNullAsDefault: true 
 };
