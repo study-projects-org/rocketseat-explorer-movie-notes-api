@@ -8,22 +8,22 @@ export class UsersController {
   async crate(request, response) {
     const { name, email, password } = request.body;
 
-    const nameIsValid = Validation.name(name);
-    const emailIsValid = Validation.email(email);
-    const passwordIsValid = Validation.password(password);
+    const nameValidation = Validation.text({ value: name, minLength: 3, propName: 'name' });
+    const emailValidation = Validation.email(email);
+    const passwordValidation = Validation.text({ value: password, minLength: 6, propName: 'password'});
 
     const errors = [];
 
-    if (!nameIsValid) {
-      errors.push('The name must contain at least 3 characters');
+    if (nameValidation.valid === false) {
+      errors.push(nameValidation.error);
     }
 
-    if (!emailIsValid) {
-      errors.push('The email format is invalid');
+    if (emailValidation) {
+      errors.push(emailValidation.error);
     }
 
-    if (!passwordIsValid) {
-      errors.push('The password must contain at least 6 characters');
+    if (passwordValidation.valid === false) {
+      errors.push(passwordValidation.error);
     }
 
     console.log(errors);
@@ -57,22 +57,22 @@ export class UsersController {
       throw new AppError('At least one field must be filled');
     }
 
-    const nameIsValid = Validation.name(name);
-    const emailIsValid = Validation.email(email);
-    const passwordIsValid = Validation.password(password);
+    const nameValidation = Validation.text({ value: name, minLength: 3, propName: 'name'});
+    const emailValidation = Validation.email(email);
+    const passwordValidation = Validation.text({ value: password, minLength: 6, propName: 'password' });
 
     const errors = [];
 
-    if (name && !nameIsValid) {
-      errors.push('The name must contain at least 3 characters');
+    if (name && nameValidation.valid === false) {
+      errors.push(nameValidation.error);
     }
 
-    if (email && !emailIsValid) {
-      errors.push('The email format is invalid');
+    if (email && emailValidation.valid === false) {
+      errors.push(emailValidation.error);
     }
 
-    if (password && !passwordIsValid) {
-      errors.push('The password must contain at least 6 characters');
+    if (password && passwordValidation.valid === false) {
+      errors.push(passwordValidation.error);
     }
 
     if (errors.length > 0) {
